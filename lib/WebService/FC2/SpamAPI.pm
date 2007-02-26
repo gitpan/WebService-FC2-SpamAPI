@@ -19,7 +19,7 @@ WebService::FC2::SpamAPI - FC2 blog spam API client
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =head1 DESCRIPTION
 
@@ -29,7 +29,7 @@ http://seo.fc2.com/spam/
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 =head1 SYNOPSIS
 
@@ -171,8 +171,11 @@ sub get_domain_list {
 
 sub _fetch {
     my ( $self, $uri ) = @_;
+
     my %options;
     $options{Cache} = $self->cache if $self->cache;
+    $uri = ( ref $uri && $uri->isa('URI') ) ? $uri->as_string : $uri;
+
     return URI::Fetch->fetch( $uri, %options );
 }
 
